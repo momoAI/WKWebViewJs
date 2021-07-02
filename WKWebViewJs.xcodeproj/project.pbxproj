@@ -15,6 +15,8 @@
 		8EBE858C268D4CEC008E309E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EBE858A268D4CEC008E309E /* LaunchScreen.storyboard */; };
 		8EBE8597268D4CED008E309E /* WKWebViewJsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBE8596268D4CED008E309E /* WKWebViewJsTests.swift */; };
 		8EBE85A2268D4CED008E309E /* WKWebViewJsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBE85A1268D4CED008E309E /* WKWebViewJsUITests.swift */; };
+		8EBE85B3268D692D008E309E /* WeakScriptMessageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBE85B2268D692D008E309E /* WeakScriptMessageDelegate.swift */; };
+		8EBE85B8268D8799008E309E /* iOSTest.html in Resources */ = {isa = PBXBuildFile; fileRef = 8EBE85B7268D8799008E309E /* iOSTest.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		8EBE859D268D4CED008E309E /* WKWebViewJsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WKWebViewJsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EBE85A1268D4CED008E309E /* WKWebViewJsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKWebViewJsUITests.swift; sourceTree = "<group>"; };
 		8EBE85A3268D4CED008E309E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8EBE85B2268D692D008E309E /* WeakScriptMessageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakScriptMessageDelegate.swift; sourceTree = "<group>"; };
+		8EBE85B7268D8799008E309E /* iOSTest.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = iOSTest.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,10 +106,12 @@
 				8EBE857F268D4CE9008E309E /* AppDelegate.swift */,
 				8EBE8581268D4CE9008E309E /* SceneDelegate.swift */,
 				8EBE8583268D4CE9008E309E /* ViewController.swift */,
+				8EBE85B2268D692D008E309E /* WeakScriptMessageDelegate.swift */,
 				8EBE8585268D4CE9008E309E /* Main.storyboard */,
 				8EBE8588268D4CEC008E309E /* Assets.xcassets */,
 				8EBE858A268D4CEC008E309E /* LaunchScreen.storyboard */,
 				8EBE858D268D4CEC008E309E /* Info.plist */,
+				8EBE85B7268D8799008E309E /* iOSTest.html */,
 			);
 			path = WKWebViewJs;
 			sourceTree = "<group>";
@@ -233,6 +239,7 @@
 			files = (
 				8EBE858C268D4CEC008E309E /* LaunchScreen.storyboard in Resources */,
 				8EBE8589268D4CEC008E309E /* Assets.xcassets in Resources */,
+				8EBE85B8268D8799008E309E /* iOSTest.html in Resources */,
 				8EBE8587268D4CE9008E309E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,6 +268,7 @@
 				8EBE8584268D4CE9008E309E /* ViewController.swift in Sources */,
 				8EBE8580268D4CE9008E309E /* AppDelegate.swift in Sources */,
 				8EBE8582268D4CE9008E309E /* SceneDelegate.swift in Sources */,
+				8EBE85B3268D692D008E309E /* WeakScriptMessageDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

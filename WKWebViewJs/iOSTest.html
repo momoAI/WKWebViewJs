@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WKWebView iOS 交互</title>
+</head>
+
+<body style="background-color: aquamarine">
+
+<!--<button style="font-size: 17px;" onclick="alert(alertText())">-->
+<!--    web button-->
+<!--</button>-->
+
+<!--<button id="mm_btn" style="font-size: 17px;" onclick="jsCalliOS()">-->
+<!--    web button-->
+<!--</button>-->
+
+<button id="mm_btn" style="font-size: 17px;">
+    web button
+</button>
+
+<script>
+
+function alertText() {
+  return 'hello js'
+}
+
+function jsFunctionParameter(prefix) {
+  return prefix + 'jsFunction'
+}
+
+function getClickButtonResult(parameter) {
+    var p = document.getElementsByTagName('body')[0]
+    p.innerHTML = parameter
+}
+
+function jsCalliOS() {
+    // 无参数
+    // postMessage必须带参数 否则iOS收不到回调，无参数空值如postMessage({})
+    // window.webkit.messageHandlers.clickButton.postMessage({})
+    
+    // 带参数
+    // window.webkit.messageHandlers.clickButton.postMessage('js_parameter')
+    
+    // prompt弹框
+    // var result = prompt('clickButton')
+    // var p = document.getElementsByTagName('body')[0]
+    // p.innerHTML = result
+    
+    // 先调iOS，让iOS再调回
+    window.webkit.messageHandlers.clickButton.postMessage({})
+    
+}
+
+</script>
+
+</body>
+
+</html>
