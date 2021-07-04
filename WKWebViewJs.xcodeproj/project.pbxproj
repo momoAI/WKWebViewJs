@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E4BFDC826915CE60059DA01 /* WebViewJavascriptBridgeBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4BFDC026915CE60059DA01 /* WebViewJavascriptBridgeBase.m */; };
+		8E4BFDC926915CE60059DA01 /* WKWebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4BFDC126915CE60059DA01 /* WKWebViewJavascriptBridge.m */; };
+		8E4BFDCA26915CE60059DA01 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4BFDC226915CE60059DA01 /* WebViewJavascriptBridge.m */; };
+		8E4BFDCB26915CE60059DA01 /* WebViewJavascriptBridge_JS.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4BFDC526915CE60059DA01 /* WebViewJavascriptBridge_JS.m */; };
 		8EBE8580268D4CE9008E309E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBE857F268D4CE9008E309E /* AppDelegate.swift */; };
 		8EBE8582268D4CE9008E309E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBE8581268D4CE9008E309E /* SceneDelegate.swift */; };
 		8EBE8584268D4CE9008E309E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBE8583268D4CE9008E309E /* ViewController.swift */; };
@@ -37,6 +41,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8E4BFDC026915CE60059DA01 /* WebViewJavascriptBridgeBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridgeBase.m; sourceTree = "<group>"; };
+		8E4BFDC126915CE60059DA01 /* WKWebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKWebViewJavascriptBridge.m; sourceTree = "<group>"; };
+		8E4BFDC226915CE60059DA01 /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
+		8E4BFDC326915CE60059DA01 /* WebViewJavascriptBridge_JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge_JS.h; sourceTree = "<group>"; };
+		8E4BFDC426915CE60059DA01 /* WebViewJavascriptBridgeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridgeBase.h; sourceTree = "<group>"; };
+		8E4BFDC526915CE60059DA01 /* WebViewJavascriptBridge_JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge_JS.m; sourceTree = "<group>"; };
+		8E4BFDC626915CE60059DA01 /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
+		8E4BFDC726915CE60059DA01 /* WKWebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewJavascriptBridge.h; sourceTree = "<group>"; };
+		8E4BFDDB26915F180059DA01 /* WKWebViewJs-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKWebViewJs-Bridging-Header.h"; sourceTree = "<group>"; };
 		8EBE857C268D4CE9008E309E /* WKWebViewJs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WKWebViewJs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EBE857F268D4CE9008E309E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EBE8581268D4CE9008E309E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +93,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E4BFDBF26915CE60059DA01 /* WebViewJavascriptBridge */ = {
+			isa = PBXGroup;
+			children = (
+				8E4BFDC426915CE60059DA01 /* WebViewJavascriptBridgeBase.h */,
+				8E4BFDC026915CE60059DA01 /* WebViewJavascriptBridgeBase.m */,
+				8E4BFDC726915CE60059DA01 /* WKWebViewJavascriptBridge.h */,
+				8E4BFDC126915CE60059DA01 /* WKWebViewJavascriptBridge.m */,
+				8E4BFDC626915CE60059DA01 /* WebViewJavascriptBridge.h */,
+				8E4BFDC226915CE60059DA01 /* WebViewJavascriptBridge.m */,
+				8E4BFDC326915CE60059DA01 /* WebViewJavascriptBridge_JS.h */,
+				8E4BFDC526915CE60059DA01 /* WebViewJavascriptBridge_JS.m */,
+			);
+			path = WebViewJavascriptBridge;
+			sourceTree = "<group>";
+		};
 		8EBE8573268D4CE9008E309E = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +140,8 @@
 				8EBE858A268D4CEC008E309E /* LaunchScreen.storyboard */,
 				8EBE858D268D4CEC008E309E /* Info.plist */,
 				8EBE85B7268D8799008E309E /* iOSTest.html */,
+				8E4BFDBF26915CE60059DA01 /* WebViewJavascriptBridge */,
+				8E4BFDDB26915F180059DA01 /* WKWebViewJs-Bridging-Header.h */,
 			);
 			path = WKWebViewJs;
 			sourceTree = "<group>";
@@ -265,10 +295,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E4BFDCB26915CE60059DA01 /* WebViewJavascriptBridge_JS.m in Sources */,
 				8EBE8584268D4CE9008E309E /* ViewController.swift in Sources */,
 				8EBE8580268D4CE9008E309E /* AppDelegate.swift in Sources */,
 				8EBE8582268D4CE9008E309E /* SceneDelegate.swift in Sources */,
 				8EBE85B3268D692D008E309E /* WeakScriptMessageDelegate.swift in Sources */,
+				8E4BFDC826915CE60059DA01 /* WebViewJavascriptBridgeBase.m in Sources */,
+				8E4BFDCA26915CE60059DA01 /* WebViewJavascriptBridge.m in Sources */,
+				8E4BFDC926915CE60059DA01 /* WKWebViewJavascriptBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +487,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = fxr.WKWebViewJs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/WKWebViewJs/WKWebViewJs-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -472,6 +507,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = fxr.WKWebViewJs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/WKWebViewJs/WKWebViewJs-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

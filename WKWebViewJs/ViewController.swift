@@ -15,6 +15,9 @@ class ViewController: UIViewController {
 
     var label: UILabel!
     var webview: WKWebView!
+    
+    // 使用WebViewJavascriptBridge
+    var webBridge: WebViewJavascriptBridge!
 
     // MARK: - lifecycle -
 
@@ -32,36 +35,57 @@ class ViewController: UIViewController {
         view.addSubview(label)
         label.backgroundColor = .red
         
-        let webConfig = WKWebViewConfiguration()
+        //-----------------------系统API-----------------------------------------------
+        
+//        let webConfig = WKWebViewConfiguration()
 
         // window.open打开新的界面
-        let webPreference = WKPreferences()
-        webPreference.javaScriptCanOpenWindowsAutomatically = true
-        webConfig.preferences = webPreference
-
-        let webUserController = WKUserContentController()
-        let scriptDelegate = WeakScriptMessageDelegate(delegate: self)
-        webUserController.add(scriptDelegate, name: WebScriptHandlerName.clickButton)
+//        let webPreference = WKPreferences()
+//        webPreference.javaScriptCanOpenWindowsAutomatically = true
+//        webConfig.preferences = webPreference
+//
+//        let webUserController = WKUserContentController()
+//        let scriptDelegate = WeakScriptMessageDelegate(delegate: self)
+//        webUserController.add(scriptDelegate, name: WebScriptHandlerName.clickButton)
         // 注入js
 //        let script = "var p = document.createElement('p'); p.innerHTML='injection from WKWebView'; document.getElementsByTagName(\"body\")[0].appendChild(p);"
 //        let script = "function iOS2jsFunction() {return 'injection from WKWebView'}"
-        let script = """
-                    function injectionJsCalliOS() {
-                        window.webkit.messageHandlers.clickButton.postMessage({})
-                    };
-                    var button = document.getElementById('mm_btn');
-                    button.onclick = injectionJsCalliOS;
-                    """
-        let injectionScript = WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-        webUserController.addUserScript(injectionScript)
-        webConfig.userContentController = webUserController
+//        let script = """
+//                    function injectionJsCalliOS() {
+//                        window.webkit.messageHandlers.clickButton.postMessage({})
+//                    };
+//                    var button = document.getElementById('mm_btn');
+//                    button.onclick = injectionJsCalliOS;
+//                    """
+//        let injectionScript = WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+//        webUserController.addUserScript(injectionScript)
+//        webConfig.userContentController = webUserController
         
-        webview = WKWebView(frame: CGRect(x: 0, y: label.frame.maxY, width: view.bounds.width, height: 200), configuration: webConfig)
+//        webview = WKWebView(frame: CGRect(x: 0, y: label.frame.maxY, width: view.bounds.width, height: 200), configuration: webConfig)
+//        webview.uiDelegate = self
+//        view.addSubview(webview)
+//        let fileURL = Bundle.main.url(forResource: "iOSTest", withExtension: "html")
+//        webview.loadFileURL(fileURL!, allowingReadAccessTo: Bundle.main.bundleURL)
+        
+        //----------------------------------------------------------------------------
+        
+        
+        //-----------------------WebViewJavascriptBridge API--------------------------
+        
+        webview = WKWebView(frame: CGRect(x: 0, y: label.frame.maxY, width: view.bounds.width, height: 200))
         webview.uiDelegate = self
         view.addSubview(webview)
-
         let fileURL = Bundle.main.url(forResource: "iOSTest", withExtension: "html")
         webview.loadFileURL(fileURL!, allowingReadAccessTo: Bundle.main.bundleURL)
+        
+        webBridge = WebViewJavascriptBridge(webview)
+        webBridge.registerHandler(WebScriptHandlerName.clickButton) { (data, responseCallback) in
+            print("CalliOSFunction with JSParameter" + (data as? String ?? ""))
+            // 返回值给JS
+            responseCallback?("result from wkwebview")
+        }
+        
+        //----------------------------------------------------------------------------
     }
     
     deinit {
@@ -72,20 +96,39 @@ class ViewController: UIViewController {
     // MARK: - action -
     
     @objc func buttonClicked() {
+        //-----------------------系统API-----------------------------------------------
+        
         // webview调用js 已有函数
 //        webview.evaluateJavaScript("jsFunction()") {[weak self] (data, _) in
 //            self?.label.text = data as? String ?? "data error"
 //        }
         
         // webview调用js 已有函数(带参数)
-//        webview.evaluateJavaScript("jsFunctionParameter('webview')") {[weak self] (data, _) in
+//        webview.evaluateJavaScript("jsFunctionParameter('wkWebview')") {[weak self] (data, _) in
 //            self?.label.text = data as? String ?? "data error"
 //        }
         
         // webview调用js WKWebView注入的js函数
-        webview.evaluateJavaScript("iOS2jsFunction()") {[weak self] (data, error) in
-            self?.label.text = data as? String ?? "data error"
-        }
+//        webview.evaluateJavaScript("iOS2jsFunction()") {[weak self] (data, error) in
+//            self?.label.text = data as? String ?? "data error"
+//        }
+        
+        //----------------------------------------------------------------------------
+        
+        
+        //-----------------------WebViewJavascriptBridge API--------------------------
+        
+        // 无参数
+//        webBridge.callHandler("jsFunction", data: nil) {[weak self] (rps) in
+//            self?.label.text = rps as? String ?? "data error"
+//        }
+        
+        // 带参数
+//        webBridge.callHandler("jsFunction", data: "wkWebview") {[weak self] (rps) in
+//            self?.label.text = rps as? String ?? "data error"
+//        }
+        
+        //----------------------------------------------------------------------------
     }
 }
 

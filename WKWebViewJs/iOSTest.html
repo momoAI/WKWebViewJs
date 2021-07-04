@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WKWebView iOS 交互</title>
+  <title>iOS WKWebView 交互</title>
 </head>
 
 <body style="background-color: aquamarine">
@@ -13,22 +13,28 @@
 <!--    web button-->
 <!--</button>-->
 
-<!--<button id="mm_btn" style="font-size: 17px;" onclick="jsCalliOS()">-->
-<!--    web button-->
-<!--</button>-->
-
-<button id="mm_btn" style="font-size: 17px;">
+<button id="mm_btn" style="font-size: 17px;" onclick="jsCalliOS()">
     web button
 </button>
 
+<!--<button id="mm_btn" style="font-size: 17px;">-->
+<!--    web button-->
+<!--</button>-->
+
 <script>
 
+var bridgeObj = Object()
+    
 function alertText() {
   return 'hello js'
 }
 
+function jsFunction() {
+    return 'CallJSFunction'
+}
+
 function jsFunctionParameter(prefix) {
-  return prefix + 'jsFunction'
+  return prefix + 'CallJSFunction'
 }
 
 function getClickButtonResult(parameter) {
@@ -50,9 +56,44 @@ function jsCalliOS() {
     // p.innerHTML = result
     
     // 先调iOS，让iOS再调回
-    window.webkit.messageHandlers.clickButton.postMessage({})
+    // window.webkit.messageHandlers.clickButton.postMessage({})
     
+    
+    //-----------------------WebViewJavascriptBridge API--------------------------
+    
+    bridgeObj.callHandler('clickButton', 'js_parameter', function(rsp) {
+        var p = document.getElementsByTagName('body')[0]
+        p.innerHTML = rsp
+    })
+    
+    //----------------------------------------------------------------------------
 }
+
+
+//-----------------------WebViewJavascriptBridge API--------------------------
+
+function setupWebViewJavascriptBridge(callback) {
+    // 官方指定固定写法
+    if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+    if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+    window.WVJBCallbacks = [callback];
+    var WVJBIframe = document.createElement('iframe');
+    WVJBIframe.style.display = 'none';
+    WVJBIframe.src = 'https://__bridge_loaded__';
+    document.documentElement.appendChild(WVJBIframe);
+    setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+}
+
+setupWebViewJavascriptBridge(function(bridge) {
+    /* Initialize your app here */
+    bridgeObj = bridge
+    bridge.registerHandler('jsFunction', function(data, responseCallback) {
+        //data就是从iOS获取的值 responseCallback返回给iOS的值
+        responseCallback((data === undefined ? '' : data) + 'CallJSFunction')
+    })
+})
+
+//----------------------------------------------------------------------------
 
 </script>
 
