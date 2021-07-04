@@ -37,53 +37,48 @@ class ViewController: UIViewController {
         
         //-----------------------系统API-----------------------------------------------
         
-//        let webConfig = WKWebViewConfiguration()
-
-        // window.open打开新的界面
-//        let webPreference = WKPreferences()
-//        webPreference.javaScriptCanOpenWindowsAutomatically = true
-//        webConfig.preferences = webPreference
-//
-//        let webUserController = WKUserContentController()
-//        let scriptDelegate = WeakScriptMessageDelegate(delegate: self)
-//        webUserController.add(scriptDelegate, name: WebScriptHandlerName.clickButton)
+        let webConfig = WKWebViewConfiguration()
+        let webUserController = WKUserContentController()
+        // 为防止循环引用，自定义WeakScriptMessageDelegate封装了一层delegate
+        let scriptDelegate = WeakScriptMessageDelegate(delegate: self)
+        webUserController.add(scriptDelegate, name: WebScriptHandlerName.clickButton)
         // 注入js
 //        let script = "var p = document.createElement('p'); p.innerHTML='injection from WKWebView'; document.getElementsByTagName(\"body\")[0].appendChild(p);"
 //        let script = "function iOS2jsFunction() {return 'injection from WKWebView'}"
-//        let script = """
-//                    function injectionJsCalliOS() {
-//                        window.webkit.messageHandlers.clickButton.postMessage({})
-//                    };
-//                    var button = document.getElementById('mm_btn');
-//                    button.onclick = injectionJsCalliOS;
-//                    """
-//        let injectionScript = WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-//        webUserController.addUserScript(injectionScript)
-//        webConfig.userContentController = webUserController
+        let script = """
+                    function injectionJsCalliOS() {
+                        window.webkit.messageHandlers.clickButton.postMessage({})
+                    };
+                    var button = document.getElementById('mm_btn');
+                    button.onclick = injectionJsCalliOS;
+                    """
+        let injectionScript = WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+        webUserController.addUserScript(injectionScript)
+        webConfig.userContentController = webUserController
         
-//        webview = WKWebView(frame: CGRect(x: 0, y: label.frame.maxY, width: view.bounds.width, height: 200), configuration: webConfig)
-//        webview.uiDelegate = self
-//        view.addSubview(webview)
-//        let fileURL = Bundle.main.url(forResource: "iOSTest", withExtension: "html")
-//        webview.loadFileURL(fileURL!, allowingReadAccessTo: Bundle.main.bundleURL)
+        webview = WKWebView(frame: CGRect(x: 0, y: label.frame.maxY, width: view.bounds.width, height: 200), configuration: webConfig)
+        webview.uiDelegate = self
+        view.addSubview(webview)
+        let fileURL = Bundle.main.url(forResource: "iOSTest", withExtension: "html")
+        webview.loadFileURL(fileURL!, allowingReadAccessTo: Bundle.main.bundleURL)
         
         //----------------------------------------------------------------------------
         
         
         //-----------------------WebViewJavascriptBridge API--------------------------
         
-        webview = WKWebView(frame: CGRect(x: 0, y: label.frame.maxY, width: view.bounds.width, height: 200))
-        webview.uiDelegate = self
-        view.addSubview(webview)
-        let fileURL = Bundle.main.url(forResource: "iOSTest", withExtension: "html")
-        webview.loadFileURL(fileURL!, allowingReadAccessTo: Bundle.main.bundleURL)
-        
-        webBridge = WebViewJavascriptBridge(webview)
-        webBridge.registerHandler(WebScriptHandlerName.clickButton) { (data, responseCallback) in
-            print("CalliOSFunction with JSParameter" + (data as? String ?? ""))
-            // 返回值给JS
-            responseCallback?("result from wkwebview")
-        }
+//        webview = WKWebView(frame: CGRect(x: 0, y: label.frame.maxY, width: view.bounds.width, height: 200))
+//        webview.uiDelegate = self
+//        view.addSubview(webview)
+//        let fileURL = Bundle.main.url(forResource: "iOSTest", withExtension: "html")
+//        webview.loadFileURL(fileURL!, allowingReadAccessTo: Bundle.main.bundleURL)
+//
+//        webBridge = WebViewJavascriptBridge(webview)
+//        webBridge.registerHandler(WebScriptHandlerName.clickButton) { (data, responseCallback) in
+//            print("CalliOSFunction with JSParameter" + (data as? String ?? ""))
+//            // 返回值给JS
+//            responseCallback?("result from wkwebview")
+//        }
         
         //----------------------------------------------------------------------------
     }
@@ -91,6 +86,8 @@ class ViewController: UIViewController {
     deinit {
         webview.configuration.userContentController.removeAllUserScripts()
         webview.configuration.userContentController.removeAllScriptMessageHandlers()
+        
+        webBridge.removeHandler(WebScriptHandlerName.clickButton)
     }
     
     // MARK: - action -
@@ -142,8 +139,8 @@ extension ViewController: WKScriptMessageHandler {
             // openCamera()...
             
             // 带参数 Allowed types are NSNumber, NSString, NSDate, NSArray,NSDictionary,NSNull
-//            guard let parameter = message.body as? String else { return }
-//            print("call from js " + parameter)
+            guard let parameter = message.body as? String else { return }
+            print("call from js " + parameter)
             // openCamera(parameter)
             
             // js调用webview, webview再调用js
@@ -172,8 +169,10 @@ extension ViewController: WKUIDelegate {
         // ... completionHandler(true)
     }
 
-    // 带输入框的alert
+    // 带输入框的alert completionHandler可以回调给js输入框输入的内容
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
-        completionHandler("result from wkwebview")
+        if prompt == "clickButton" {
+            completionHandler("result from wkwebview")
+        }
     }
 }
